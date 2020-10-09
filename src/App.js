@@ -16,9 +16,11 @@ function App() {
   // posts from redux store
   let posts = useSelector((store) => store.posts);
   let userDetails = useSelector((store) => store.userDetails);
+  const [toLoad, setLoad] = useState(false);
 
   let dispatch = useDispatch();
   function updatePosts() {
+    console.log('updatePosts');
     getAllPosts(lastPost, (data) => {
       if (data.posts.length !== 0) {
         dispatch(fetchposts(data.posts));
@@ -26,11 +28,28 @@ function App() {
       }
     });
   }
-
+  function loadListener(){
+    if(window.scrollY + window.innerHeight >= document.body.offsetHeight){
+      setLoad(true);
+      updatePosts();
+    }
+  }
   useEffect(() => {
     updatePosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    window.addEventListener('scroll', loadListener);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if(toLoad)  {
+      window.removeEventListener('scroll', loadListener);
+      console.log('the event listener has been removed');
+      updatePosts();
+      setLoad(false);
+    }
+  }, [toLoad])
+
 
   // state of the id of latest post
   const [lastPost, setlastPost] = useState(1);

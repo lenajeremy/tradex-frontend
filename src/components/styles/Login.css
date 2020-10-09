@@ -6,5 +6,10 @@
   transform:  translate(-50%, -50%);
 }
 .MuiButton-containedPrimary{
-  background-color: darkcyan!important;
+  background-color: darkcyan;
+}
+.MuiCircularProgress-root.MuiCircularProgress-colorPrimary.MuiCircularProgress-indeterminate{
+  color: white;
+  height: 20px!important;
+  width: 20px!important;
 }

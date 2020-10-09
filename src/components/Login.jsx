@@ -12,7 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import {LockOutlined} from '@material-ui/icons'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Login(props) {
   const dispatch = useDispatch();
@@ -20,8 +20,10 @@ function Login(props) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [toRedirect, setRedirect] = useState(false);
+  const [submit, setSubmit ] = useState(false);
 
   function handleFormSubmission(event) {
+    setSubmit(true);
     event.preventDefault();
     loginUser(userName, password, data => {
       if (data.status === 200) {
@@ -32,6 +34,7 @@ function Login(props) {
           setRedirect(true);
         })
       } else setError(true);
+      setSubmit(false);
     });
   }
 
@@ -76,7 +79,7 @@ function Login(props) {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color='primary'>Log in</Button>
+            <Button type="submit" fullWidth variant="contained" color='primary'>{submit ? <React.Fragment>Logging you in...<CircularProgress variant = 'indeterminate' color = 'primary'/></React.Fragment> : 'Log in'}</Button>
             <Grid container spacing={2}>
               <Grid item>
                 <Link to='/register'>

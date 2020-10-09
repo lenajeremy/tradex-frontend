@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 function Register(props) {
@@ -52,6 +53,7 @@ function Register(props) {
         resetState()
       } else { setError(true); setErrors(data.errors) }
     })
+    setError(false);
   }
   return (
     <Container component = 'main' maxWidth = 'lg'>
@@ -157,7 +159,7 @@ function Register(props) {
             fullWidth
             variant="contained"
             color = 'primary'
-          >Sign Up</Button>
+          >Sign Up  {isError ? <CircularProgress variant = 'indeterminate'/> : ''}</Button>
           <Grid container>
             <Grid item>
               <Link to="/login" variant="body2">
